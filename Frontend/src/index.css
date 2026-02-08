@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.flex-ankit::-webkit-scrollbar {
+  display: none;
+}
