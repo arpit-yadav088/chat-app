@@ -1,12 +1,46 @@
 import React from 'react'
+import { useForm } from "react-hook-form"
+import axios from "axios" 
+import { useAuth } from '../context/AuthProvider'
 
 const Login = () => {
+  const {authUser, setAuthUser} = useAuth();
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      }
+      axios.post("http://localhost:5002/user/login", userInfo).then((response) => {
+        console.log(response.data);
+        
+        if (response.data) {
+          alert("login successful. ");
+        }
+  
+        localStorage.setItem("messenger", JSON.stringify (response.data));
+        setAuthUser(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          alert("error:" + error.response.data.message);
+        }
+      });
+    };
+
   return (
     <>
       <div>
         <div>
     <div className='flex h-screen items-center justify-center'>
-      <form action="" className="border border-black px-6 py-3 rounded-md space-y-3 w-92">
+      <form 
+       onSubmit={handleSubmit(onSubmit)}
+       className="border border-black px-6 py-3 rounded-md space-y-3 w-92">
        <h1 className='text-xl items-center text-blue-500 font-bold '>
         Messenger
        </h1>
@@ -28,8 +62,10 @@ const Login = () => {
              <path d="M2.5 3A1.5 1.5 0 0 1 4 1.5h8A1.5 1.5 0 0 1 13.5 3v.793c.026.009.051.02.076.032L7.674 8.51c.206.146.446.165.598-.318A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V13h14V6.954Z" />
             </svg>
-            <input type="text" className="grow" placeholder="Email" />
+            <input type="text" className="grow" placeholder="Email" 
+            {...register("email", { required: true })} />
          </label>
+         {errors.email && <span className='text-red-500 text-sm'>**This field is required</span>}
 
          {/* password */}
          <label className="h-7 input input-bordered flex items-center gap-2 border border-black">
@@ -45,8 +81,13 @@ const Login = () => {
               clipRule="evenodd"
              />
           </svg>
-           <input type="password" className="grow" placeholder="password" />
+           <input type="password" 
+           className="grow" 
+           placeholder="password" 
+           {...register("password", { required: true })}
+           />
          </label>
+         {errors.password && <span className='text-red-500 text-sm'>**This field is required</span>}
 
          {/* text & button */}
 
