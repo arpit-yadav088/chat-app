@@ -2,6 +2,9 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 import axios from "axios" 
 import { useAuth } from '../context/AuthProvider'
+import { Link } from 'react-router-dom'
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const {authUser, setAuthUser} = useAuth();
@@ -11,27 +14,101 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-      const userInfo = {
-        email: data.email,
-        password: data.password,
-      }
-      axios.post("http://localhost:5002/user/login", userInfo).then((response) => {
-        console.log(response.data);
+//     const onSubmit = (data) => {
+//       const userInfo = {
+//         email: data.email,
+//         password: data.password,
+//       }
+//       // axios.post("http://localhost:5002/user/login", userInfo).then((response) => {
+//       //   console.log(response.data);
+
+//       axios.post("http://localhost:5002/user/login", userInfo, {
+//   withCredentials: true, // ✅ IMPORTANT
+// });
         
-        if (response.data) {
-          alert("login successful. ");
-        }
+//         if (response.data) {
+//           alert("login successful. ");
+//         }
+
+//           // ✅ TOKEN SAVE (IMPORTANT)
+//          Cookies.set("jwt", response.data.token);
   
-        localStorage.setItem("messenger", JSON.stringify (response.data));
-        setAuthUser(response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          alert("error:" + error.response.data.message);
-        }
-      });
-    };
+//         localStorage.setItem("messenger", JSON.stringify(response.data.user));
+//         setAuthUser(response.data.user);
+//       })
+//       .catch((error) => {
+//         if (error.response) {
+//           alert("error:" + error.response.data.message);
+//         }
+//       });
+//     };
+
+// const onSubmit = (data) => {
+//   const userInfo = {
+//     email: data.email,
+//     password: data.password,
+//   };
+
+//   axios
+//     .post("http://localhost:5002/user/login", userInfo, {
+//       withCredentials: true, // ✅ Good: Needed for cross-site cookies
+//     })
+//     .then((response) => {
+//       // Logic must stay INSIDE the .then block
+//       if (response.data) {
+//         alert("Login successful.");
+        
+//         // ✅ Save Token to Cookies
+//         // Note: If your backend uses 'Set-Cookie' header with httpOnly, 
+//         // you might not need to set it manually here.
+//         Cookies.set("jwt", response.data.token);
+
+//         // Save to LocalStorage and Update Context
+//         localStorage.setItem("messenger", JSON.stringify(response.data.user));
+//         setAuthUser(response.data.user);
+//       }
+//     })
+//     .catch((error) => {
+//       if (error.response) {
+//         alert("Error: " + (error.response.data.message || "Login failed"));
+//       } else {
+//         alert("Server is unreachable");
+//       }
+//     });
+// };
+
+
+const onSubmit = (data) => {
+  const userInfo = {
+    email: data.email,
+    password: data.password,
+  };
+
+  axios
+    .post("/api/user/login", userInfo, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      // 2. यहाँ डेटा प्रिंट होना चाहिए
+      console.log("Server Response:", response.data); 
+
+      if (response.data) {
+        alert("Login successful.");
+        
+        // LocalStorage और Context अपडेट करें
+        localStorage.setItem("messenger", JSON.stringify(response.data.user));
+        setAuthUser(response.data.user);
+        
+        // डेटा आने के बाद का कन्फर्मेशन
+        console.log("AuthUser set successfully!");
+      }
+    })
+    .catch((error) => {
+      // 3. अगर कोई एरर है तो यहाँ दिखेगा
+      console.error("Login Error Details:", error.response ? error.response.data : error.message);
+      alert("Error: " + (error.response?.data?.message || "Login failed"));
+    });
+};
 
   return (
     <>
@@ -94,8 +171,9 @@ const Login = () => {
          <div className='flex justify-between'>
          <input type='submit' value="login" className='text-white bg-blue-500 w-full rounded-lg py-2 cursor-pointer' ></input>
          </div>
-         <p>Don't have any Account? <span className='text-blue-500 underline cursor-pointer ml-1'>Signup
-            </span></p>   
+         <p>Don't have any Account? 
+          <Link to={"/signup"} className='text-blue-500 underline cursor-pointer ml-1'>Signup
+            </Link></p>   
       </form>
     </div>
     </div>

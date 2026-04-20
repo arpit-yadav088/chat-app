@@ -1,6 +1,18 @@
 import React from 'react'
+import useConversation from '../../statemanage/useConversation'
 
 const Chatuser = () => {
+  const { selectedConversation } = useConversation();
+  console.log(selectedConversation)
+
+
+  if (!selectedConversation) {
+    return (
+      <div className="h-[10vh] px-5 flex items-center bg-gray-800">
+        <h1 className="text-xl text-white">Select a user to chat</h1>
+      </div>
+    );
+  }
   return (
   <>
   {/* <div className='h-[14vh] pl-5 pt-3 flex space-x-4 bg-gray-800 hover:bg-gray-600 duration-300'> */}
@@ -17,7 +29,7 @@ const Chatuser = () => {
 
     {/* User Info */}
     <div>
-      <h1 className="text-xl">Ankit Pathak</h1>
+      <h1 className="text-xl">{selectedConversation.name}</h1>
       <span className='text-xl'>Online</span>
     </div>
   </div>

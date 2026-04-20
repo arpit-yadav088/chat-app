@@ -1,20 +1,67 @@
+// import React from 'react'
+// import useConversation from "../../statemanage/useConversation.js";
+// // import { useSocketContext } from "../../context/SocketContext.jsx";
+
+
+// const User = ( user ) => {
+//     const { selectedConversation, setSelectedConversation } = useConversation();
+//   const isSelected = selectedConversation?._id === user._id;
+//   // const { socket, onlineUsers } = useSocketContext();
+//   // const isOnline = onlineUsers.includes(user._id);
+//   return (
+//     <div 
+//      className={`hover:bg-slate-600 duration-300 ${
+//         isSelected ? "bg-slate-700" : ""
+//       }`}
+//       onClick={() => setSelectedConversation(user)}
+//     >
+//       <div className='flex space-x-4 py-7 hover:bg-slate-600 duration-300 cursor-pointer '>
+//       <div className="avatar avatar-online">
+//         <div className="w-12 rounded-full">
+//          <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
+//       </div>
+//     </div>
+
+//     <div>
+//       <h1>{user.name}</h1>
+//       <span>{user.email}</span>
+//     </div>
+//     </div>
+//     </div>
+//   )
+// }
+
+// export default User
+
+
+
 import React from 'react'
+import useConversation from "../../statemanage/useConversation.js";
 
-const User = () => {
+const User = ({ user }) => {
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+  const isSelected = selectedConversation?._id === user._id;
+
   return (
-    <div>
-      <div className='flex space-x-4 py-7 hover:bg-slate-600 duration-300 cursor-pointer '>
-      <div className="avatar avatar-online">
-        <div className="w-12 rounded-full">
-         <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" />
-      </div>
-    </div>
+    <div
+      className={`hover:bg-slate-600 duration-300 ${
+        isSelected ? "bg-slate-700" : ""
+      }`}
+      onClick={() => setSelectedConversation(user)}
+    >
+      <div className='flex space-x-4 py-7 cursor-pointer'>
+        <div className="avatar avatar-online">
+          <div className="w-12 rounded-full">
+            <img src="https://img.daisyui.com/images/profile/demo/gordon@192.webp" alt="profile" />
+          </div>
+        </div>
 
-    <div>
-      <h1>Mahadev</h1>
-      <span>mahadev12@gmail.com</span>
-    </div>
-    </div>
+        <div>
+          <h1>{user.name}</h1>
+          <span>{user.email}</span>
+        </div>
+      </div>
     </div>
   )
 }
