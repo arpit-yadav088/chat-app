@@ -78,6 +78,7 @@ import Login from "./components/Login";
 import { useAuth } from "./context/AuthProvider";
 // import Logout from "./home/left1/Logout";
  import Logout from './home/left1/Logout'
+ import { Toaster } from "react-hot-toast";
 
 import { Navigate, Route, Routes } from "react-router-dom";
 // import Loading from "./components/Loading";
@@ -96,6 +97,7 @@ function App() {
                 <Logout />
                 <Left />
                 <Right />
+
               </div>
 
 
@@ -114,7 +116,6 @@ function App() {
           element={authUser ? <Navigate to="/" /> : <Signup />}
         />
       </Routes>
-      {/* <Signup></Signup> */}
     </>
   );
 }

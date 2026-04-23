@@ -93,7 +93,7 @@ const onSubmit = (data) => {
       console.log("Server Response:", response.data); 
 
       if (response.data) {
-        alert("Login successful.");
+        toast.success("Login successful.");
         
         // LocalStorage और Context अपडेट करें
         localStorage.setItem("messenger", JSON.stringify(response.data.user));
@@ -106,7 +106,7 @@ const onSubmit = (data) => {
     .catch((error) => {
       // 3. अगर कोई एरर है तो यहाँ दिखेगा
       console.error("Login Error Details:", error.response ? error.response.data : error.message);
-      alert("Error: " + (error.response?.data?.message || "Login failed"));
+      toast.error("Error: " + (error.response?.data?.message || "Login failed"));
     });
 };
 

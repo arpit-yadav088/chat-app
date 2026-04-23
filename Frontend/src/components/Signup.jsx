@@ -311,6 +311,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useAuth } from '../context/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const { setAuthUser } = useAuth();
@@ -343,7 +344,7 @@ const Signup = () => {
       });
 
       if (response.data) {
-        alert("Signup successful!");
+        toast.success("Signup successful!");
         
         // LocalStorage में सेव करें
         localStorage.setItem("messenger", JSON.stringify(response.data.user));
@@ -356,9 +357,9 @@ const Signup = () => {
       }
     } catch (error) {
       if (error.response) {
-        alert("Error: " + (error.response.data.error || error.response.data.message));
+        toast.error("Error: " + (error.response.data.error || error.response.data.message));
       } else {
-        alert("Server is not reachable. Please try again later.");
+        toast.error("Server is not reachable. Please try again later.");
       }
     }
   };

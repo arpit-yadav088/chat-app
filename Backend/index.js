@@ -92,10 +92,10 @@ import cors from "cors";
 import userRoute from "./route/user.route.js";
 import messageRoute from "./route/message.route.js";
 import cookieParser from "cookie-parser";
-
+import { app, server } from "./SocketIO/server.js";
 dotenv.config();
 
-const app = express();
+// const app = express();
 
 // Middleware
 app.use(express.json());
@@ -121,7 +121,7 @@ const connectDB = async () => {
     console.log("✅ Connected to MongoDB");
     
     // अब सर्वर यहाँ सिर्फ एक बार शुरू होगा
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`🚀 Server is running on port ${PORT}`);
     });
   } catch (error) {
