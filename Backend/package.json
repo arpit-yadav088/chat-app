@@ -9,12 +9,11 @@
   "author": "Arpit Yadav",
   "type": "module",
   "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js",
-    "dev": "nodemon index.js",
-    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend"
-
-  },
+ "scripts": {
+  "dev": "nodemon index.js",
+  "start": "node index.js",
+  "build": "npm install && npm install --prefix Frontend && npm --prefix Frontend run build"
+},
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
