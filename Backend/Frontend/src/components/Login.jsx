@@ -14,70 +14,6 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-//     const onSubmit = (data) => {
-//       const userInfo = {
-//         email: data.email,
-//         password: data.password,
-//       }
-//       // axios.post("http://localhost:5002/user/login", userInfo).then((response) => {
-//       //   console.log(response.data);
-
-//       axios.post("http://localhost:5002/user/login", userInfo, {
-//   withCredentials: true, // ✅ IMPORTANT
-// });
-        
-//         if (response.data) {
-//           alert("login successful. ");
-//         }
-
-//           // ✅ TOKEN SAVE (IMPORTANT)
-//          Cookies.set("jwt", response.data.token);
-  
-//         localStorage.setItem("messenger", JSON.stringify(response.data.user));
-//         setAuthUser(response.data.user);
-//       })
-//       .catch((error) => {
-//         if (error.response) {
-//           alert("error:" + error.response.data.message);
-//         }
-//       });
-//     };
-
-// const onSubmit = (data) => {
-//   const userInfo = {
-//     email: data.email,
-//     password: data.password,
-//   };
-
-//   axios
-//     .post("http://localhost:5002/user/login", userInfo, {
-//       withCredentials: true, // ✅ Good: Needed for cross-site cookies
-//     })
-//     .then((response) => {
-//       // Logic must stay INSIDE the .then block
-//       if (response.data) {
-//         alert("Login successful.");
-        
-//         // ✅ Save Token to Cookies
-//         // Note: If your backend uses 'Set-Cookie' header with httpOnly, 
-//         // you might not need to set it manually here.
-//         Cookies.set("jwt", response.data.token);
-
-//         // Save to LocalStorage and Update Context
-//         localStorage.setItem("messenger", JSON.stringify(response.data.user));
-//         setAuthUser(response.data.user);
-//       }
-//     })
-//     .catch((error) => {
-//       if (error.response) {
-//         alert("Error: " + (error.response.data.message || "Login failed"));
-//       } else {
-//         alert("Server is unreachable");
-//       }
-//     });
-// };
-
-
 const onSubmit = (data) => {
   const userInfo = {
     email: data.email,
@@ -89,22 +25,18 @@ const onSubmit = (data) => {
       withCredentials: true,
     })
     .then((response) => {
-      // 2. यहाँ डेटा प्रिंट होना चाहिए
       console.log("Server Response:", response.data); 
 
       if (response.data) {
         toast.success("Login successful.");
         
-        // LocalStorage और Context अपडेट करें
         localStorage.setItem("messenger", JSON.stringify(response.data.user));
         setAuthUser(response.data.user);
-        
-        // डेटा आने के बाद का कन्फर्मेशन
+
         console.log("AuthUser set successfully!");
       }
     })
     .catch((error) => {
-      // 3. अगर कोई एरर है तो यहाँ दिखेगा
       console.error("Login Error Details:", error.response ? error.response.data : error.message);
       toast.error("Error: " + (error.response?.data?.message || "Login failed"));
     });
@@ -127,8 +59,6 @@ const onSubmit = (data) => {
         <hr />
         <br></br>
 
-        
-          {/* Email */}
           <label className="h-7 input input-bordered flex items-center gap-2 border border-black">
             <svg
              xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +74,6 @@ const onSubmit = (data) => {
          </label>
          {errors.email && <span className='text-red-500 text-sm'>**This field is required</span>}
 
-         {/* password */}
          <label className="h-7 input input-bordered flex items-center gap-2 border border-black">
           <svg
              xmlns="http://www.w3.org/2000/svg"
@@ -165,8 +94,6 @@ const onSubmit = (data) => {
            />
          </label>
          {errors.password && <span className='text-red-500 text-sm'>**This field is required</span>}
-
-         {/* text & button */}
 
          <div className='flex justify-between'>
          <input type='submit' value="login" className='text-white bg-blue-500 w-full rounded-lg py-2 cursor-pointer' ></input>

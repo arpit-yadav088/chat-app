@@ -15,7 +15,6 @@ const Chatuser = () => {
     );
   }
 
-  // online check
   const isOnline =
     Array.isArray(onlineUsers) &&
     onlineUsers.map(String).includes(String(selectedConversation._id));
@@ -23,7 +22,6 @@ const Chatuser = () => {
   return (
     <div className="h-[10vh] px-5 flex items-center space-x-4 bg-gray-800 hover:bg-gray-700 duration-300">
 
-      {/* Avatar + Green Dot */}
       <div className="relative">
         <img
           src="https://img.daisyui.com/images/profile/demo/gordon@192.webp"
@@ -36,7 +34,6 @@ const Chatuser = () => {
         )}
       </div>
 
-      {/* User Info */}
       <div>
         <h1 className="text-xl">{selectedConversation.name}</h1>
 
